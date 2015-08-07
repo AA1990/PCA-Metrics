@@ -1,0 +1,297 @@
+<script>
+$(function() {
+	$( ".input-group-m" ).click(function() {
+		if ($( ".input-header-m" ).hasClass("input-header2")) {
+			$(".input-header-m" ).removeClass("input-header2")
+		}else{
+			$(".input-header-m" ).addClass("input-header2")
+		};
+	});
+});
+</script>
+
+<!-- MENU TOP PARTIAL -->
+<!-- NORMAL -->
+<div class="btn-group btn-group-justified top-menu" ng-if="partial==='Principio Activo' || partial==='Otras Enfermedades' || partial==='Laboratorios' || partial==='Especialidades Médicas' || partial==='Indicaciones Médicas' || partial==='Desviaciones'">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default partial-menu-btn" ng-click="toggleFilters()" ng-style="setBackgroundFilMed()">Filtros</button>
+	</div>
+</div>
+<!-- MEDICAMENTOS -->
+<div class="btn-group btn-group-justified top-menu" ng-if="partial==='Medicamentos'">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default partial-menu-btn" ng-click="toggleFilters()" ng-style="setBackgroundFilMed()">Filtros</button>
+	</div>
+	<div class="btn-group btn-group-justified" ng-if="medShowOpts">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Marca Grupo')" ng-click="medCatsSwitch('Marca Grupo')">Marca Grupo</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Marca')" ng-click="medCatsSwitch('Marca')">Marca</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Presentación')" ng-click="medCatsSwitch('Presentación')">Presentación</button>
+		</div>
+	</div>
+	<div class="btn-group current-med-cat" ng-if="!medShowOpts">
+		<button type="button" class="btn btn-default partial-menu-btn" ng-click="medCatsShow()">{{medCurrentOpt}} <span class="caret"></span></button>
+	</div>
+</div>
+<!-- FARMACIAS -->
+<div class="btn-group btn-group-justified top-menu" ng-if="partial==='Farmacias'">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default partial-menu-btn" ng-click="toggleFilters()" ng-style="setBackgroundFilMed()">Filtros</button>
+	</div>
+	<div class="btn-group btn-group-justified" ng-if="medShowOpts">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Cadena')" ng-click="medCatsSwitch('Cadena')">Cadena</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Farmacias')" ng-click="medCatsSwitch('Farmacias')">Farmacias</button>
+		</div>
+	</div>
+	<div class="btn-group current-med-cat" ng-if="!medShowOpts">
+		<button type="button" class="btn btn-default partial-menu-btn" ng-click="medCatsShow()">{{medCurrentOpt}} <span class="caret"></span></button>
+	</div>
+</div>
+<!-- DATOS DEMOGRAFICOS -->
+<div class="btn-group btn-group-justified top-menu" ng-if="partial==='Datos Demográficos'">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default partial-menu-btn" ng-click="toggleFilters()" ng-style="setBackgroundFilMed()">Filtros</button>
+	</div>
+	<div class="btn-group btn-group-justified" ng-if="medShowOpts">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Sexo')" ng-click="medCatsSwitch('Sexo')">Sexo</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Edad')" ng-click="medCatsSwitch('Edad')">Edad</button>
+		</div>
+	</div>
+	<div class="btn-group current-med-cat" ng-if="!medShowOpts">
+		<button type="button" class="btn btn-default partial-menu-btn" ng-click="medCatsShow()">{{medCurrentOpt}} <span class="caret"></span></button>
+	</div>
+</div>
+<!-- OTRAS PRESCRIPCIONES / OTRAS DISPENSACIONES-->
+<div class="btn-group btn-group-justified top-menu" ng-if="partial==='Otras Prescripciones'  || partial==='Otras Dispensaciones'">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default partial-menu-btn" ng-click="toggleFilters()" ng-style="setBackgroundFilMed()">Filtros</button>
+	</div>
+	<div class="btn-group btn-group-justified" ng-if="medShowOpts">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Presentación')" ng-click="medCatsSwitch('Presentación')">Presentación</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Marca')" ng-click="medCatsSwitch('Marca')">Marca</button>
+		</div>
+	</div>
+	<div class="btn-group current-med-cat" ng-if="!medShowOpts">
+		<button type="button" class="btn btn-default partial-menu-btn" ng-click="medCatsShow()">{{medCurrentOpt}} <span class="caret"></span></button>
+	</div>
+</div>
+<!-- ENFERMEDADES -->
+<div class="btn-group btn-group-justified top-menu" ng-if="partial==='Enfermedades'">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default partial-menu-btn" ng-click="toggleFilters()" ng-style="setBackgroundFilMed()">Filtros</button>
+	</div>
+	<div class="btn-group btn-group-justified" ng-if="medShowOpts">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Subtipo de Diagnóstico')" ng-click="medCatsSwitch('Subtipo de Diagnóstico')">Subtipo de Diagnóstico</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Tipo de Diagnóstico')" ng-click="medCatsSwitch('Tipo de Diagnóstico')">Tipo de Diagnóstico</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default categ-select med-cat" ng-style="setBackgroundMed('Diagnóstico')" ng-click="medCatsSwitch('Diagnóstico')">Diagnóstico</button>
+		</div>
+	</div>
+	<div class="btn-group current-med-cat" ng-if="!medShowOpts">
+		<button type="button" class="btn btn-default partial-menu-btn" ng-click="medCatsShow()">{{medCurrentOpt}} <span class="caret"></span></button>
+	</div>
+</div>
+<!-- CLASES TERAPEUTICAS -->
+<div class="top-menu2 row text-center" ng-if="partial==='Clases Terapéuticas'">
+	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 partial-menu-btn2" ng-click="toggleFilters()"  ng-style="setBackgroundFilMed()">
+		<a class="filtros-btn">Filtros</a>
+	</div>
+	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 categs" ng-if="medShowOpts">
+		<div ng-click="medCatsSwitch('Clases Terapéuticas')" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 categ-select2"  ng-style="setBackgroundMed('Clases Terapéuticas')">
+			<a ng-style="setBackgroundMed('Clases Terapéuticas')" class="med-cat2">Clases Terapéuticas</a>
+		</div>
+		<div ng-click="medCatsSwitch('Subclases Terapéuticas')" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 categ-select2"  ng-style="setBackgroundMed('Subclases Terapéuticas')">
+			<a ng-style="setBackgroundMed('Subclases Terapéuticas')" class="med-cat2">Subclases Terapéuticas</a>
+		</div>
+		<div ng-click="medCatsSwitch('Subclases Terapéuticas 2')" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 categ-select2"  ng-style="setBackgroundMed('Subclases Terapéuticas 2')">
+			<a ng-style="setBackgroundMed('Subclases Terapéuticas 2')" class="med-cat2">Subclases Terapéuticas 2</a>
+		</div>
+		<div ng-click="medCatsSwitch('Subclases Terapéuticas 3')" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 categ-select2"  ng-style="setBackgroundMed('Subclases Terapéuticas 3')">
+			<a ng-style="setBackgroundMed('Subclases Terapéuticas 3')" class="med-cat2">Subclases Terapéuticas 3</a>
+		</div>
+	</div>
+	<div class="current-med-cat col-xs-10 col-sm-10 col-md-10 col-lg-10 partial-menu-btn2" ng-if="!medShowOpts" ng-click="medCatsShow()">
+		<a ng-if="medCurrentOpt==='Presentación'" class="current-categ-btn">Clases Terapéuticas<span class="caret"></span></a>
+		<a ng-if="medCurrentOpt!=='Presentación'" class="current-categ-btn">{{medCurrentOpt}} <span class="caret"></span></a>
+	</div>
+</div>
+
+<!-- FILTROS -->
+<div class="row filtros-div" ng-if="medFiltersOn">
+	<!-- <div class="filtros-div"> -->
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 filter-elem">
+		<label  for="age-filter" class="col-sm-3 control-label labels-filt">Edad:</label>
+		<div class="col-sm-9 edad-div-filt-elem">
+			<input type="number" id="age_input_m" class="form-control age-filter" min="0" max="150" ng-enter="applyFilters()">
+			<!-- <input type="text" id="age_input_m" class="form-control age-filter" min="0" max="150" ng-enter="applyFilters()" ng-model="age"> -->
+		</div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 filter-elem">
+		<label  class="col-sm-3 control-label labels-filt">Grupo Edad:</label>
+		<div class="col-sm-9 div-filt-elem">
+		<select id="age_group_input_m" ng-model="ageGroup" ng-options="ageGroup.name for ageGroup in ageGroups" class="age-group-filt" ng-enter="applyFilters()"></select>
+		<div ng-if="edadAct">
+			<span class="edad-act-div">Edad en uso.</span>
+		</div>
+	</div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 filter-elem top-right-menu-filter">
+		<label  class="col-sm-3 control-label labels-filt">Monto Total:</label>
+		<div class="col-sm-9 div-filt-elem">
+			<input ng-enter="applyFilters()" id="total_from_m" type="number" step="25" min="0" class="form-control amount-filter col-sm-6">
+			<input ng-enter="applyFilters()" id="total_to_m" type="number" step="25" min="0" class="form-control amount-filter col-sm-6">
+		</div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 filter-elem">
+		<form class="form-horizontal" role="form">
+			<label  for="age-filter" class="col-sm-3 control-label labels-filt bottom-left-filter-label">Precio:</label>
+			<div class="col-sm-9 div-filt-elem precio-filt-elem">
+				<input ng-enter="applyFilters()" id="price_from_m" type="number" step="25" min="0" class="form-control amount-filter col-sm-6">
+				<input ng-enter="applyFilters()" id="price_to_m" type="number" step="25" min="0" class="form-control amount-filter col-sm-6">
+			</div>
+		</form>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 filter-elem sex-filt">
+		<label class="col-sm-3 control-label labels-filt sex-label">Sexo:</label>
+		<div class="col-sm-9 sex-filt-div">
+			<i class="fa fa-male filter-male" ng-click="maleFilt()" ng-style="maleStyle()"></i>
+			<i class="fa fa-female filter-female" ng-click="femaleFilt()" ng-style="femaleStyle()"></i>
+		</div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 filter-elem">
+		<button ng-click="applyFilters()" type="button" class="btn btn-sm btn-default apply-filts-med pull-right">Aplicar</button>
+	</div>
+</div>
+
+	<div data-toggle="tooltip" data-placement="top" title="Click para desactivar substitutos" ng-click="substitutes(true)" id="substitutes_span_m" ng-if="substitutesAct"><i class="fa fa-search" id="search_filt_m_0"></i> Mostrando Substitutos de: {{focusedRow}} </div>
+
+<!-- FILTROS ACTIVOS -->
+<div ng-if="filtsAct" class="filts-actv">
+	<!-- tooltip click to remove -->
+
+	<span>Click para remover filtro </span>
+
+	<span data-toggle="tooltip" data-placement="top" title="Click para desactivar busqueda" ng-click="search_span_mRemove()" id="search_span_m" ng-if="searching"><i class="fa fa-chevron-right" id="chevron_filt_m_0"></i> Mostrando solo: '{{fetchedValue}}' </span>
+
+
+	<span data-toggle="tooltip" data-placement="top" title="Click para remover este filtro" ng-click="age_span_mRemove()" id="age_span_m" ng-if="edadAct"><i class="fa fa-chevron-right" id="chevron_filt_m_1"></i> Edad: {{age}} </span>
+	<span data-toggle="tooltip" data-placement="top" title="Click para remover este filtro" ng-click="age_group_span_mRemove()" id="age_group_span_m" ng-if="edadGrupoAct"><i class="fa fa-chevron-right" id="chevron_filt_m_2"></i> Grupo edad: {{ageGroup.name}} </span>
+	<span data-toggle="tooltip" data-placement="top" title="Click para remover este filtro" ng-click="total_f_span_mRemove()" id="total_f_span_m" ng-if="montoActFrom"><i class="fa fa-chevron-right" id="chevron_filt_m_3"></i> Monto min.: {{totalFiltFrom}} </span>
+	<span data-toggle="tooltip" data-placement="top" title="Click para remover este filtro" ng-click="total_t_span_mRemove()" id="total_t_span_m" ng-if="montoActTo"><i class="fa fa-chevron-right" id="chevron_filt_m_4"></i> Monto max.: {{totalFiltTo}} </span>
+	<span data-toggle="tooltip" data-placement="top" title="Click para remover este filtro" ng-click="price_f_span_mRemove()" id="price_f_span_m" ng-if="priceActFrom"><i class="fa fa-chevron-right" id="chevron_filt_m_5"></i> Precio min.: {{priceFrom}} </span>
+	<span data-toggle="tooltip" data-placement="top" title="Click para remover este filtro" ng-click="price_t_span_mRemove()" id="price_t_span_m" ng-if="priceActTo"><i class="fa fa-chevron-right" id="chevron_filt_m_6"></i> Precio max.: {{priceTo}} </span>
+	<span data-toggle="tooltip" data-placement="top" title="Click para remover este filtro" ng-click="male_span_mRemove()" id="male_span_m" ng-if="maleAct"><i class="fa fa-chevron-right" id="chevron_filt_m_7"></i> <i class="fa fa-male"></i></span>
+	<span data-toggle="tooltip" data-placement="top" title="Click para remover este filtro" ng-click="female_span_mRemove()" id="female_span_m" ng-if="femaleAct"><i class="fa fa-chevron-right" id="chevron_filt_m_8"></i> <i class="fa fa-female"></i></span>
+</div>
+<!-- SEARCH PRINCIPAL(IF NEEDED) -->
+<div class="input-group input-group-lg input-for-table" ng-if="partial==='Otras Prescripciones' || partial==='Otras Dispensaciones' || partial==='Otras Enfermedades' || partial==='Indicaciones Médicas'">
+  <input ng-enter="loadTable()" type="text" class="form-control input-ft-input" placeholder="{{placeholder}}">
+  <span ng-click="loadTable()" class="input-group-addon input-ft-addon">Buscar</span>
+</div>
+
+<!-- TABLA -->
+<div id="table_container">
+<div class="table-med">
+	<div class="table-header-0">
+		<b ng-if="partial==='Otras Prescripciones' || partial==='Otras Dispensaciones' || partial==='Otras Enfermedades'">{{partial}} con:</b>
+		<b ng-if="partial!=='Otras Prescripciones' && partial!=='Otras Dispensaciones' && partial!=='Otras Enfermedades'">{{partial}}:</b> {{focusedRow}}
+		<input type="search" class="input-header-m pull-right" ng-model="query" placeholder="Buscar" ng-enter="searchInTable()">
+		<span class="input-group-m pull-right"><i class="fa fa-search lupa"></i></span>
+	</div>
+	<table class="table table-striped table-hover table-head">
+		<thead>
+			<tr>
+				<th ng-style="tableHeaderCursor('numeral')" class="table-numeral">
+					#
+				</th>
+				<th ng-style="tableHeaderCursor('name')" class="table-header table-header-01" ng-click="medOrderByChange('name')">
+					<i class="fa fa-chevron-circle-down column-chevron" ng-if="(medTableOrderBy==='name') && medReverse"></i>
+					<i class="fa fa-chevron-circle-up column-chevron" ng-if="(medTableOrderBy==='name') && !medReverse"></i>
+					Nombre
+				</th>
+				<th ng-style="tableHeaderCursor('transactions')" class="table-header text-center table-header-1" ng-click="medOrderByChange('transactions')">
+					<i class="fa fa-chevron-circle-down column-chevron" ng-if="(medTableOrderBy==='transactions') && medReverse"></i>
+					<i class="fa fa-chevron-circle-up column-chevron" ng-if="(medTableOrderBy==='transactions') && !medReverse"></i>
+					Transacciones
+				</th>
+
+				<th ng-if="partial!=='Especialidades Médicas' && partial!=='Farmacias' && partial!=='Otras Prescripciones' && partial!=='Otras Dispensaciones' && partial!=='Otras Enfermedades' && partial!=='Desviaciones'" ng-style="tableHeaderCursor('Prescrito')" class="table-header text-center table-header-2">
+					Prescrito
+				</th>
+				<th ng-if="partial!=='Especialidades Médicas' && partial!=='Farmacias' && partial!=='Otras Prescripciones' && partial!=='Otras Dispensaciones' && partial!=='Otras Enfermedades' && partial!=='Desviaciones'" ng-style="tableHeaderCursor('Facturado')" class="table-header text-center table-header-3">
+					Facturado
+				</th>
+
+				<th ng-if="partial!=='Especialidades Médicas' && partial!=='Otras Prescripciones' && partial!=='Otras Dispensaciones' && partial!=='Otras Enfermedades'  && partial!=='Desviaciones'" ng-style="tableHeaderCursor('total')" class="table-header text-center table-header-4" ng-click="medOrderByChange('total')">
+					<i class="fa fa-chevron-circle-down column-chevron" ng-if="(medTableOrderBy==='total') && medReverse"></i>
+					<i class="fa fa-chevron-circle-up column-chevron" ng-if="(medTableOrderBy==='total') && !medReverse"></i>
+					Monto Total
+				</th>
+				<th ng-if="partial==='Principio Activo'||(medCurrentOpt==='Presentación'&&partial==='Medicamentos') && partial!=='Otras Prescripciones' && partial!=='Otras Dispensaciones' && partial!=='Otras Enfermedades' && partial!=='Desviaciones'" ng-style="tableHeaderCursor('mean')" class="table-header text-center table-header-5" ng-click="medOrderByChange('mean')">
+					<i class="fa fa-chevron-circle-down column-chevron" ng-if="(medTableOrderBy==='mean') && medReverse"></i>
+					<i class="fa fa-chevron-circle-up column-chevron" ng-if="(medTableOrderBy==='mean') && !medReverse"></i>
+					Precio
+				</th>
+			</tr>
+		</thead>
+	</table>
+	<div ng-if="tableService.hasData()" class="no-data-div">
+		No hay datos para mostrar.
+	</div>
+	<div class = "table-body-div">
+		<table class="table table-striped table-hover table-responsive table-data">
+			<tbody id="tbody">
+				<tr ng-repeat="row in tableService.data() | orderBy:position:medReverse" ng-click="cellFocus(row.name)" ng-style="rowFocusStyle(row)">
+					<td ng-style="positionColStyle()" class="table-pos-value">{{row.position}}</td>
+					<td class="table-value0">{{row.name}}</td>
+					<td class="table-value1 text-center">{{row.transactions}}</td >
+					<td ng-if="partial!=='Especialidades Médicas' && partial!=='Farmacias' && partial!=='Otras Prescripciones' && partial!=='Otras Dispensaciones' && partial!=='Otras Enfermedades' && partial!=='Desviaciones'" class="table-value2 text-center" >{{row.presc}}</td >
+					<td ng-if="partial!=='Especialidades Médicas' && partial!=='Farmacias' && partial!=='Otras Prescripciones' && partial!=='Otras Dispensaciones' && partial!=='Otras Enfermedades' && partial!=='Desviaciones'" class="table-value3 text-center" >{{row.fact}}</td >
+					<td ng-if="partial!=='Especialidades Médicas' && partial!=='Otras Prescripciones' && partial!=='Otras Dispensaciones' && partial!=='Otras Enfermedades' && partial!=='Desviaciones'" class="table-value4 text-center" >{{row.total}}</td >
+					<td ng-if="partial==='Principio Activo'||(medCurrentOpt==='Presentación'&&partial==='Medicamentos') && partial!=='Otras Prescripciones' && partial!=='Otras Dispensaciones' && partial!=='Otras Enfermedades' && partial!=='Desviaciones'" class="table-value5 text-center" >{{row.mean}}</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- DATOS DE PAGINACION -->
+<div class="pagination-settings">
+	Datos por página: 
+	<span class="query-paging-size" ng-click="changeQueryLimit(10)" ng-style="activeQueryStyle(10)">10</span>
+	<span class="query-paging-size" ng-click="changeQueryLimit(25)" ng-style="activeQueryStyle(25)">25</span>
+	<span class="query-paging-size" ng-click="changeQueryLimit(50)" ng-style="activeQueryStyle(50)">50</span>
+	<span class="query-paging-size" ng-click="changeQueryLimit(100)" ng-style="activeQueryStyle(100)">100</span>
+	<span class="data-total">Datos totales: </span>
+	{{tableService.dataTotal()}} 
+</div>
+<!-- PAGINACION -->
+<span class="pull-right" id="go_last" ng-click="changePage(-2)">Última</span>
+
+<ul class="pagination pull-right">
+<li><a href="#" ng-style="actvPageStyle(-1)" class="pagination-left" ng-click="prevPages()">&laquo;</a></li>
+<li><a href="#" ng-style="actvPageStyle(0)" class="pagination-number1" ng-click="changePage(0)">{{pages[0]}}</a></li>
+<li><a href="#" ng-style="actvPageStyle(1)" class="pagination-number2" ng-click="changePage(1)">{{pages[1]}}</a></li>
+<li><a href="#" ng-style="actvPageStyle(2)" class="pagination-number3" ng-click="changePage(2)">{{pages[2]}}</a></li>
+<li><a href="#" ng-style="actvPageStyle(3)" class="pagination-number4" ng-click="changePage(3)">{{pages[3]}}</a></li>
+<li><a href="#" ng-style="actvPageStyle(4)" class="pagination-number5" ng-click="changePage(4)">{{pages[4]}}</a></li>
+<li><a href="#" ng-style="actvPageStyle(-2)" class="pagination-right" ng-click="nextPages()">&raquo;</a></li>
+</ul>
+<span class="pull-right" id="go_first" ng-click="changePage(-1)">Primera</span>

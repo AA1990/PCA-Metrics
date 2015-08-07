@@ -1,0 +1,107 @@
+<!-- 
+- Collapse
+
+- Search
+- Arreglar logo para resoluciones.
+- Drag & drop 
+-->
+<!-- Blink is considering rejecting non spec-compliant cross-origin web font requests: http://joekuan.org/digital.ttf. Please use Access-Control-Allow-Origin to make these requests spec-compliant.  -->
+
+<div class="container-fluid db-container">
+
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 upper-left-db-container">
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="draggable">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-minus-square pull-right" ng-click="totalSiShowSwitch()"></i>
+                    <h3 class="panel-title">Total Siniestralidad</h3>
+				</div>
+				<div class="panel-body" ng-hide="totalSiShow">
+					<div class="db-totals pull-right">
+						{{ setSaving.sinister() }}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="draggable2">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-minus-square pull-right" ng-click="totalSaShowSwitch()"></i>
+                    <h3 class="panel-title">Total Ahorro</h3>
+				</div>
+				<div class="panel-body" ng-hide="totalSaShow">
+					<div class="db-totals pull-right">
+						{{ setSaving.saving() }}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="draggable3">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-minus-square pull-right" ng-click="transShowSwitch()"></i>
+                    <h3 class="panel-title">Transacciones</h3>
+				</div>
+				<div class="panel-body" id="db-box">
+                    <chart id="chart1" config="chartConfig"></chart>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 upper-right-db-container" id="draggable4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-minus-square pull-right" ng-click="savingShowSwitch()"></i>
+                <h3 class="panel-title">Porcentaje de Ahorro</h3>
+			</div>
+			<div class="panel-body" id="db-box2">
+                <chartgauge id="chart2" config="chartConfig2"></chartgauge>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="draggable5">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-minus-square pull-right" ng-click="irregularityShowSwitch()"></i>
+                <h3 class="panel-title">Desviaciones</h3>
+			</div>
+            <div class="panel-body" id="db-box3">
+                <table class="table table-striped table-hover table-condensed table-irregs">
+                	<thead>
+                		<tr>
+                			<th class="table-header" ng-click="dbIrregOrderByChange('name')">
+								<i class="fa fa-chevron-circle-down column-chevron" ng-if="(dbIrregOrderBy==='name') && dbReverse"></i>
+								<i class="fa fa-chevron-circle-up column-chevron" ng-if="(dbIrregOrderBy==='name') && !dbReverse"></i>
+                				Desviaciones
+                			</th>
+                			<th class="table-header" id="db_cantidad" ng-click="dbIrregOrderByChange('cantidad')">
+								<i class="fa fa-chevron-circle-down column-chevron" ng-if="(dbIrregOrderBy==='cantidad') && dbReverse"></i>
+								<i class="fa fa-chevron-circle-up column-chevron" ng-if="(dbIrregOrderBy==='cantidad') && !dbReverse"></i>
+                				Cantidad
+                			</th>
+                			<th class="table-header" id="db_total" ng-click="dbIrregOrderByChange('total')">
+								<i class="fa fa-chevron-circle-down column-chevron" ng-if="(dbIrregOrderBy==='total') && dbReverse"></i>
+								<i class="fa fa-chevron-circle-up column-chevron" ng-if="(dbIrregOrderBy==='total') && !dbReverse"></i>
+                				Monto
+                			</th>
+                		</tr>
+                	</thead>
+	                	<tbody>
+							<tr ng-repeat="row in setIrregularities.array() |orderBy:dbIrregOrderBy:dbReverse">
+								<td>{{row.name}}</td>
+								<td>{{row.cantidad}}</td>
+								<td >{{row.total | number}}</td>
+							</tr>
+						</tbody>
+                </table>
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,201 @@
+<script>
+$(function() {
+  $( ".input-group" ).click(function() {
+    if ($( ".input-header" ).hasClass("input-header2")) {
+      $(".input-header" ).removeClass("input-header2")
+    }else{
+      $(".input-header" ).addClass("input-header2")
+    };
+  });
+   
+$.datepicker.regional['es'] = {
+closeText: 'Cerrar',
+prevText: '<Ant',
+nextText: 'Sig>',
+currentText: 'Hoy',
+monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+weekHeader: 'Sm',
+dateFormat: 'dd/mm/yy',
+firstDay: 1,
+isRTL: false,
+showMonthAfterYear: false,
+yearSuffix: ''
+};
+$.datepicker.setDefaults($.datepicker.regional['es']);
+
+
+  // $.datepicker.setDefaults($.datepicker.regional["es"]);
+  $( "#datepicker1" ).datepicker();
+  $( "#datepicker2" ).datepicker();
+});
+</script>
+
+<!-- Header -->
+<header>
+  <nav class="navbar navbar-default header" role="navigation" ng-click="dropsOff()">
+    <div class="container-fluid">
+
+
+      
+      <div class="navbar-header">
+
+        <!-- Menu toggle button -->
+        <h1 ng-if="!menuSwitch">
+        <img src="static/images/PCA-Metrics-logo2.png" alt="" height="38" width="35">PCAMetrics<i class="fa fa-bars" id="menu_toggle_link" ng-click='menuToggle()'></i>
+        </h1>
+        <!-- Menu toggle button.2 -->
+        <h1 ng-if="menuSwitch">
+        <i class="fa fa-bars" id="menu_toggle_link2" ng-click='menuToggle()'></i>
+        </h1>
+
+      </div>
+
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
+      
+
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle header-user" data-toggle="dropdown">
+              Augusto JAS <i class="fa fa-user user-i"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </li>
+        </ul>
+      
+        <!-- Header.Search -->
+        <form  class="navbar-form navbar-right ">
+
+          <div class="input-group">
+            <span class="input-group-addon" ng-style="menuAct()"><i class="fa fa-search lupa"></i></span>
+            <input type="search" class="input-header" id="header_search" ng-model="query" ng-enter="menuGoto()" ng-up="menuUp()" ng-down="menuDown()" ng-change="openSidebar()" placeholder="Buscar">
+          </div>
+
+        </form><!-- /.header-search  -->
+
+
+
+
+          <div class="navbar-right datepickers"  ng-switch="partial">
+            <p>Fecha:
+              <input type="text" id="datepicker1" class="datepicker-head" ng-model="date1">
+               - 
+               <input type="text" class="datepicker-head" id="datepicker2" ng-model="date2"> 
+               <button type="button" ng-switch-when="Dashboard" class="btn btn-default" id="date_btn" ng-click="dateRegister()" ng-controller='DashboardCtrl'>Aplicar</button>
+               <button type="button" ng-switch-default class="btn btn-default" id="date_btn" ng-click="dateRegisterMed()" ng-controller='MedicamentosCtrl'>Aplicar</button>
+             </p>
+
+               <!-- <button type="button" class="btn btn-default" id="date_btn" ng-click="getDbTransactionsOrd()">Aplicar</button></p> -->
+        </div>
+
+
+
+
+
+      <!-- </div>/.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+</header>
+
+<!-- Body -->
+<body>
+<!-- Sidebar -->
+<div class="sidebar-div" ng-if="menuSwitch">
+  <!-- Logo -->
+  <ul class="nav nav-sidebar sidebar0"><img src="static/images/PCA-Metrics.png" class="img-responsive" alt="PCAMetrics" id="logo"></ul>
+  <!-- Menu -->
+  <ul class="nav nav-sidebar sidebar">
+    <li ng-repeat="opcion in menu | filter:query" ng-switch = "opcion" class="sidebar-elem">
+      
+      <a href="#/{{opcion}}.html" ng-switch-when="Medicamentos" class="opc-sidebar" ng-click='medSwitch()' ng-style='medSwitchStyle()'>{{opcion}}</a>
+      <a ng-style='sidebarDropOpcStyle("Medicamentos")' ng-if="medicamentosDrop === true" ng-switch-when="Medicamentos" class="opc-drop-side" ng-click='optSelected(opcion)'>Medicamentos</a>
+      <a ng-style='sidebarDropOpcStyle("Principio Activo")' ng-if="medicamentosDrop=== true" ng-switch-when="Medicamentos" class="opc-drop-side" ng-click='optSelected("Principio Activo")'>Principio Activo</a>
+      <a ng-style='sidebarDropOpcStyle("Laboratorios")' ng-if="medicamentosDrop === true" ng-switch-when="Medicamentos" class="opc-drop-side" ng-click='optSelected("Laboratorios")'>Laboratorios</a>
+
+      <a href="#/{{opcion}}.html" ng-switch-when="Otros" class="opc-sidebar" ng-click='otrSwitch()' ng-style='otrosSwitchStyle()'>{{opcion}}</a>
+      <a ng-click='optSelected("Otras Prescripciones")' ng-style='sidebarDropOpcStyle("Otras Prescripciones")' ng-if="otrosDrop === true" ng-switch-when="Otros" class="opc-drop-side">Otras Prescripciones</a>
+      <a ng-click='optSelected("Otras Dispensaciones")'  ng-style='sidebarDropOpcStyle("Otras Dispensaciones")' ng-if="otrosDrop === true" ng-switch-when="Otros" class="opc-drop-side">Otras Dispensaciones</a>
+      <a ng-click='optSelected("Otras Enfermedades")'  ng-style='sidebarDropOpcStyle("Otras Enfermedades")' ng-if="otrosDrop === true" ng-switch-when="Otros" class="opc-drop-side">Otras Enfermedades</a>
+
+      <a ng-switch-default class="opc-sidebar" ng-click='optSelected(opcion)' ng-style='sidebarOpcStyle(opcion)'>{{opcion}}</a>
+
+    </li>
+  </ul>
+</div>
+
+<!-- Partials (Main Body) -->
+  <div class="body-div" ng-switch="partial" ng-click="dropsOff()"> 
+    <div ng-switch-when="Medicamentos">
+      <div ui-view="medicamentos"></div>
+    </div>
+    <div ng-switch-when="Principio Activo">
+      <div ui-view="principioActivo"></div>
+    </div>
+    <div ng-switch-when="Laboratorios">
+      <div ui-view="laboratorios"></div>
+    </div>
+    <div ng-switch-when="Clases Terapéuticas">
+      <div ui-view="clasesTerapeuticas"></div>
+    </div>
+    <div ng-switch-when="Enfermedades">
+      <div ui-view="enfermedades"></div>
+    </div>
+    <div ng-switch-when="Datos Demográficos">
+      <div ui-view="datosDemograficos"></div>
+    </div>
+    <div ng-switch-when="Pacientes">
+      <div ui-view="pacientes"></div>
+    </div>
+    <div ng-switch-when="Especialidades Médicas">
+      <div ui-view="especialidadesMedicas"></div>
+    </div>
+    <div ng-switch-when="Indicaciones Médicas">
+      <div ui-view="indicacionesMedicas"></div>
+    </div>
+    <div ng-switch-when="Farmacias">
+      <div ui-view="farmacias"></div>
+    </div>
+    <div ng-switch-when="Desviaciones">
+      <div ui-view="desviaciones"></div>
+    </div>
+    <div ng-switch-when="Otras Prescripciones">
+      <div ui-view="otrasPrescripciones"></div>
+    </div>
+    <div ng-switch-when="Otras Dispensaciones">
+      <div ui-view="otrasDispensaciones"></div>
+    </div>
+    <div ng-switch-when="Otras Enfermedades">
+      <div ui-view="otrasEnfermedades"></div>
+    </div>
+    <div ng-switch-when="Tabla de Consulta">
+      <div ui-view="tablaDeConsulta"></div>
+    </div>
+    <div ng-switch-default>
+      <div ui-view="dashboard"></div>
+    </div>
+
+  </div> 
+</body>  
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer">
+     <!-- {{tablasObj.}} -->
+     <!-- data: {{datosParaGrafica}} - {{arrayNulo}} -->
+     <!-- date1:{{date1}}   from:{{ setDate.from() }} - date2:{{date2}}   to:{{setDate.to() }} -->
+     <!-- caso() orden  -->
+    <p> <span class="fa fa-heart"></span> from the PRX team</p>
+  </div>
+</footer>

@@ -1,0 +1,6 @@
+	<div ng-if="isLogged.check()">
+      <div ui-view="main"></div>
+    </div>
+    <div ng-if="!isLogged.check()">
+      <div ui-view="login"></div>
+    </div>
